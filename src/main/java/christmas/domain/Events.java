@@ -3,7 +3,7 @@ package christmas.domain;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class EventCalendar {
+public class Events {
     public static final int EventYear = 2023;
     public static final int EventMonth = 12;
     public static final int EventStartDate = 1;
@@ -22,15 +22,15 @@ public class EventCalendar {
     private static final String VISIT_DATE_VALIDATION_ERROR_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.";
     private int visitDate;
 
-    private EventCalendar(final String visitDate) {
+    private Events(final String visitDate) {
         validationNull(visitDate);
         validationNumber(visitDate);
         validationDate(visitDate);
         this.visitDate = Integer.parseInt(visitDate);
     }
 
-    public static EventCalendar of(final String visitDate) {
-        return new EventCalendar(visitDate);
+    public static Events of(final String visitDate) {
+        return new Events(visitDate);
     }
 
     public static void validationNull(String input) {

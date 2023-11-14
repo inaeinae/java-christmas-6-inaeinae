@@ -1,17 +1,11 @@
 package christmas.service;
 
-import christmas.domain.EventCalendar;
-import christmas.domain.Menu;
+import christmas.domain.Events;
 import christmas.domain.Orders;
 import christmas.view.InputView;
-import christmas.view.OutputView;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Map;
 
 public class ChristmasService {
-    public EventCalendar askVisitDate() {
+    public Events askVisitDate() {
         return InputView.inputVisitDate();
     }
 
@@ -19,45 +13,45 @@ public class ChristmasService {
         return InputView.inputOrders();
     }
 
-    public void matchEvents(Orders orders, EventCalendar eventCalendar) {
+    public void matchEvents(Orders orders, Events events) {
         int totalOrderAmount = orders.getTotalOrderAmount();
-        int dDayEventDiscount = dDayEvent(eventCalendar);
-        int weekEventDiscount = weekEvent(orders, eventCalendar);
-        int specialEventDiscount = specialEvent(eventCalendar);
+        int dDayEventDiscount = dDayEvent(events);
+        int weekEventDiscount = weekEvent(orders, events);
+        int specialEventDiscount = specialEvent(events);
         boolean supplementEventPossibility = supplementEvent(totalOrderAmount);
         System.out.println();
     }
 
-    private int dDayEvent(EventCalendar eventCalendar) {
-        int discountCount = eventCalendar.getVisitDate() - EventCalendar.DDayEventStartDate;
-        return EventCalendar.DDayEventStartDiscount + (discountCount * EventCalendar.DDayEventIncreaseDiscount);
+    private int dDayEvent(Events events) {
+        int discountCount = events.getVisitDate() - Events.DDayEventStartDate;
+        return Events.DDayEventStartDiscount + (discountCount * Events.DDayEventIncreaseDiscount);
     }
 
-    private int weekEvent(Orders orders, EventCalendar eventCalendar) {
-        String discountMenuType = getWeekEventMenuType(eventCalendar);
+    private int weekEvent(Orders orders, Events events) {
+        String discountMenuType = getWeekEventMenuType(events);
         return orders.getOrders().entrySet().stream()
                 .filter(order -> order.getKey().getMenuType().equals(discountMenuType))
-                .mapToInt(order -> EventCalendar.WeekEventDiscount * order.getValue())
+                .mapToInt(order -> Events.WeekEventDiscount * order.getValue())
                 .sum();
     }
 
-    private String getWeekEventMenuType(EventCalendar eventCalendar) {
-        if (EventCalendar.WeekendEventDates.contains(eventCalendar.getVisitDate())) {
-            return EventCalendar.WeekendEventMenuType;
+    private String getWeekEventMenuType(Events events) {
+        if (Events.WeekendEventDates.contains(events.getVisitDate())) {
+            return Events.WeekendEventMenuType;
         }
-        return EventCalendar.WeekEventMenuType;
+        return Events.WeekEventMenuType;
     }
 
-    private int specialEvent(EventCalendar eventCalendar) {
+    private int specialEvent(Events events) {
         int discountAmount = 0;
-        if (EventCalendar.SpecialEventDates.contains(eventCalendar.getVisitDate())) {
-            discountAmount = EventCalendar.SpecialEventDiscount;
+        if (Events.SpecialEventDates.contains(events.getVisitDate())) {
+            discountAmount = Events.SpecialEventDiscount;
         }
         return discountAmount;
     }
 
     private boolean supplementEvent(int totalOrderAmount) {
-        if (totalOrderAmount >= EventCalendar.SupplementEventMoney) {
+        if (totalOrderAmount >= Events.SupplementEventMoney) {
             return true;
         }
         return false;
