@@ -1,7 +1,7 @@
 package christmas.controller;
 
 import christmas.domain.EventCalendar;
-import christmas.domain.Order;
+import christmas.domain.Orders;
 import christmas.service.ChristmasService;
 
 public class ChristmasController {
@@ -10,8 +10,9 @@ public class ChristmasController {
     public ChristmasController(ChristmasService christmasService) { this.christmasService = christmasService; }
 
     public void start() {
-        EventCalendar visitDate = christmasService.askVisitDate();
-        Order order = christmasService.askOrder();
+        EventCalendar eventCalendar = christmasService.askVisitDate();
+        Orders orders = christmasService.askOrders();
+        christmasService.matchEvents(orders, eventCalendar);
     }
 
     /*

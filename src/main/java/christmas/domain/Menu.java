@@ -25,4 +25,8 @@ public enum Menu {
     public String getMenuType() {
         return this.menuType;
     }
+
+    public int getPrice() {
+        return this.price;
+    }
 }
