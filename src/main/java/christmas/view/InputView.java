@@ -2,6 +2,11 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.EventCalendar;
+import christmas.domain.Order;
+import org.mockito.internal.matchers.Or;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class InputView {
     public static EventCalendar inputVisitDate() {
@@ -10,6 +15,17 @@ public class InputView {
         while(true) {
             try {
                 return EventCalendar.of(Console.readLine());
+            } catch(IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static Order inputOrder() {
+        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        while(true) {
+            try {
+                return Order.of(Console.readLine().replaceAll(" ", ""));
             } catch(IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
