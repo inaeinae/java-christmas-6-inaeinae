@@ -17,7 +17,7 @@ public class EventResult {
         return new EventResult(discountEventResults, supplementEventFlag);
     }
 
-    private EventBadge giveEventBadge() {
+    public EventBadge giveEventBadge() {
         return EventBadge.valueOf(getDiscountTotalAmount());
     }
 

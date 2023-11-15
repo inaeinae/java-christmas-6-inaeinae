@@ -1,21 +1,11 @@
 package christmas;
 
 import christmas.domain.Events;
-import jdk.jfr.Event;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EventsTest {
-    private Events events;
-
-    @BeforeEach
-    void initEvents() {
-        events = Events.of("25");
-    }
-
     @Test
     void getWeekendDates_2023년_12월의_주말_리턴() {
         assertThat(Events.getWeekendDates()).contains(1, 2, 8, 9, 15, 16, 22, 23, 29, 30);
@@ -23,6 +13,7 @@ public class EventsTest {
 
     @Test
     void isWeekend_2023년_12월_기준_방문날짜의_주말여부_리턴() {
+        Events events = Events.of("25");
         assertThat(events.isWeekend()).isFalse();
     }
 
