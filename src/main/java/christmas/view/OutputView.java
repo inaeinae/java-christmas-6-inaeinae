@@ -32,18 +32,23 @@ public class OutputView {
     private static void outputSupplementEventResult(boolean supplementEventFlag) {
         StringJoiner joiner = new StringJoiner("\n", "", "\n");
         joiner.add("<증정 메뉴>");
-        if(supplementEventFlag) {
-            joiner.add(String.format("%s %d개", Events.SupplementEventMenu.name(), Events.SupplementEventMenuCount));
-        }
         if(!supplementEventFlag) {
             joiner.add("없음");
+            System.out.println(joiner.toString());
+            return;
         }
+        joiner.add(String.format("%s %d개", Events.SupplementEventMenu.name(), Events.SupplementEventMenuCount));
         System.out.println(joiner.toString());
     }
 
     private static void outputEventResult(EventResult eventResult) {
         StringJoiner joiner = new StringJoiner("\n", "", "\n");
         joiner.add("<혜택 내역>");
+        if(eventResult.getDiscountTotalAmount() == 0) {
+            joiner.add("없음");
+            System.out.println(joiner.toString());
+            return;
+        }
         eventResult.getDiscountEventResults().entrySet().stream()
                 .filter(discountEventResult -> discountEventResult.getValue() > 0)
                 .map(discountEventResult -> String.format("%s: -%s원", EventType.valueOf(discountEventResult.getKey()).getEventTypeName(), new DecimalFormat("###,###").format(discountEventResult.getValue())))
@@ -72,12 +77,12 @@ public class OutputView {
     private static void outputEventBadge(EventBadge eventBadge) {
         StringJoiner joiner = new StringJoiner("\n", "", "\n");
         joiner.add("<12월 이벤트 배지>");
-        if(!Objects.isNull(eventBadge)) {
-            joiner.add(eventBadge.getEventBadgeName());
-        }
         if(Objects.isNull(eventBadge)) {
             joiner.add("없음");
+            System.out.println(joiner.toString());
+            return;
         }
+        joiner.add(eventBadge.getEventBadgeName());
         System.out.println(joiner.toString());
     }
 }
