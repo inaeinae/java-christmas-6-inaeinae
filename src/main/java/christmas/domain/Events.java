@@ -53,7 +53,7 @@ public class Events {
         }
     }
 
-    private static List<Integer> getWeekendDates() {
+    public static List<Integer> getWeekendDates() {
         List<Integer> weekendDates = new ArrayList<>();
         Calendar startCalendar = new GregorianCalendar(EventYear, EventMonth-1, EventStartDate);
         Calendar endCalendar = new GregorianCalendar(EventYear, EventMonth-1, EventEndDate);
