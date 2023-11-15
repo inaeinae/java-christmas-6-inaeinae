@@ -1,8 +1,11 @@
 package christmas.service;
 
+import christmas.domain.EventBadge;
 import christmas.domain.Events;
 import christmas.domain.Orders;
 import christmas.view.InputView;
+
+import java.util.Arrays;
 
 public class ChristmasService {
     public Events askVisitDate() {
@@ -19,7 +22,8 @@ public class ChristmasService {
         int weekEventDiscount = weekEvent(orders, events);
         int specialEventDiscount = specialEvent(events);
         boolean supplementEventPossibility = supplementEvent(totalOrderAmount);
-        System.out.println();
+        int totalDiscountAmount = dDayEventDiscount + weekEventDiscount + specialEventDiscount;
+        EventBadge eventBadge = EventBadge.valueOf(totalDiscountAmount);
     }
 
     private int dDayEvent(Events events) {
