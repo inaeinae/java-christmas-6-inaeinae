@@ -31,6 +31,9 @@ public class ChristmasService {
     }
 
     private int dDayEvent(Events events) {
+        if(events.getVisitDate() > Events.DDayEventEndDate) {
+            return 0;
+        }
         int discountCount = events.getVisitDate() - Events.DDayEventStartDate;
         return Events.DDayEventStartDiscount + (discountCount * Events.DDayEventIncreaseDiscount);
     }
