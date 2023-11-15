@@ -18,6 +18,14 @@ public class ChristmasService {
     }
 
     public void matchEvents(Orders orders, Events events) {
+        EventResult eventResult = EventResult.of(new HashMap<>(), false);
+        if(orders.getTotalOrderAmount() > Events.MinimumApplyEventAmountPoint) {
+            eventResult = ApplyEvents(orders, events);
+        }
+        OutputView.outputEventResult(orders, eventResult);
+    }
+
+    private EventResult ApplyEvents(Orders orders, Events events) {
         Map<String, Integer> discountEventResults = new HashMap<>();
         String weekEventType = "WeekEvent";
         if(events.isWeekend()) {
@@ -26,8 +34,7 @@ public class ChristmasService {
         discountEventResults.put(weekEventType, weekEvent(orders, events));
         discountEventResults.put("DDayEvent", dDayEvent(events));
         discountEventResults.put("SpecialEvent", specialEvent(events));
-        EventResult eventResult = EventResult.of(discountEventResults, supplementEvent(orders.getTotalOrderAmount()));
-        OutputView.outputEventResult(orders, eventResult);
+        return EventResult.of(discountEventResults, supplementEvent(orders.getTotalOrderAmount()));
     }
 
     private int dDayEvent(Events events) {

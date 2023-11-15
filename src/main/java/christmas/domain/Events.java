@@ -21,6 +21,7 @@ public class Events {
     public static final int SupplementEventMoney = 120000;
     public static final Menu SupplementEventMenu = Menu.샴페인;
     public static final int SupplementEventMenuCount = 1;
+    public static final int MinimumApplyEventAmountPoint = 10000;
     private static final String VISIT_DATE_VALIDATION_ERROR_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.";
     private int visitDate;
 
