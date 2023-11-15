@@ -19,6 +19,8 @@ public class Events {
     public static final String WeekendEventMenuType = "MAIN";
     public static final int WeekEventDiscount = 2023;
     public static final int SupplementEventMoney = 120000;
+    public static final Menu SupplementEventMenu = Menu.샴페인;
+    public static final int SupplementEventMenuCount = 1;
     private static final String VISIT_DATE_VALIDATION_ERROR_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.";
     private int visitDate;
 
@@ -67,5 +69,19 @@ public class Events {
 
     public int getVisitDate() {
         return this.visitDate;
+    }
+
+    public boolean isWeekend() {
+        if(WeekendEventDates.contains(this.visitDate)) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getWeekEventMenuType() {
+        if (isWeekend()) {
+            return WeekendEventMenuType;
+        }
+        return WeekEventMenuType;
     }
 }

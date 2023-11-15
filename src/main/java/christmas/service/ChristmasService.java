@@ -1,11 +1,12 @@
 package christmas.service;
 
-import christmas.domain.EventBadge;
+import christmas.domain.EventResult;
 import christmas.domain.Events;
 import christmas.domain.Orders;
 import christmas.view.InputView;
+import christmas.view.OutputView;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class ChristmasService {
     public Events askVisitDate() {
@@ -17,13 +18,16 @@ public class ChristmasService {
     }
 
     public void matchEvents(Orders orders, Events events) {
-        int totalOrderAmount = orders.getTotalOrderAmount();
-        int dDayEventDiscount = dDayEvent(events);
-        int weekEventDiscount = weekEvent(orders, events);
-        int specialEventDiscount = specialEvent(events);
-        boolean supplementEventPossibility = supplementEvent(totalOrderAmount);
-        int totalDiscountAmount = dDayEventDiscount + weekEventDiscount + specialEventDiscount;
-        EventBadge eventBadge = EventBadge.valueOf(totalDiscountAmount);
+        Map<String, Integer> discountEventResults = new HashMap<>();
+        String weekEventType = "WeekEvent";
+        if(events.isWeekend()) {
+            weekEventType = "WeekendEvent";
+        }
+        discountEventResults.put(weekEventType, weekEvent(orders, events));
+        discountEventResults.put("DDayEvent", dDayEvent(events));
+        discountEventResults.put("SpecialEvent", specialEvent(events));
+        EventResult eventResult = EventResult.of(discountEventResults, supplementEvent(orders.getTotalOrderAmount()));
+        OutputView.outputEventResult(orders, eventResult);
     }
 
     private int dDayEvent(Events events) {
@@ -32,18 +36,10 @@ public class ChristmasService {
     }
 
     private int weekEvent(Orders orders, Events events) {
-        String discountMenuType = getWeekEventMenuType(events);
         return orders.getOrders().entrySet().stream()
-                .filter(order -> order.getKey().getMenuType().equals(discountMenuType))
+                .filter(order -> order.getKey().getMenuType().equals(events.getWeekEventMenuType()))
                 .mapToInt(order -> Events.WeekEventDiscount * order.getValue())
                 .sum();
-    }
-
-    private String getWeekEventMenuType(Events events) {
-        if (Events.WeekendEventDates.contains(events.getVisitDate())) {
-            return Events.WeekendEventMenuType;
-        }
-        return Events.WeekEventMenuType;
     }
 
     private int specialEvent(Events events) {

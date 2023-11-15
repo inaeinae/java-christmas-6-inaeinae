@@ -132,7 +132,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        StringJoiner lineJoiner = new StringJoiner("\n");
+        StringJoiner lineJoiner = new StringJoiner("\n", "", "\n");
         lineJoiner.add("<주문 메뉴>");
         orders.entrySet().stream()
                 .forEach(order -> lineJoiner.add(String.join(" ", order.getKey().name(), order.getValue()+"개")));

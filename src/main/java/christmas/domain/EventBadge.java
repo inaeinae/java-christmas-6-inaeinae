@@ -11,7 +11,8 @@ public enum EventBadge {
     private String BadgeName;
     private int totalDiscountAmountPoint;
 
-    EventBadge(String BadgeName, int totalDiscountAmountPoint) {
+    EventBadge(String badgeName, int totalDiscountAmountPoint) {
+        this.BadgeName = badgeName;
         this.totalDiscountAmountPoint = totalDiscountAmountPoint;
     }
 
@@ -26,4 +27,6 @@ public enum EventBadge {
     public int getTotalDiscountAmountPoint() {
         return this.totalDiscountAmountPoint;
     }
+
+    public String getEventBadgeName() { return this.BadgeName; }
 }
