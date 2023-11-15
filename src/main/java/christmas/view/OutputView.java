@@ -62,7 +62,7 @@ public class OutputView {
 
     private static void outputTotalDiscountAmount(EventResult eventResult) {
         StringJoiner joiner = new StringJoiner("\n", "", "\n");
-        joiner.add("<총 혜택 금액>");
+        joiner.add("<총혜택 금액>");
         joiner.add(String.format("-%s원", new DecimalFormat("###,###").format(eventResult.getDiscountTotalAmount())));
         System.out.println(joiner.toString());
     }

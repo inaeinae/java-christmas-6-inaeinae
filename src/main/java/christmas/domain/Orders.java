@@ -72,7 +72,7 @@ public class Orders {
         if (matchOrderMenus(orderMenus).stream()
                 .filter(orderMenuType -> !orderMenuType.getMenuType().equals("DRINK"))
                 .count() == 0) {
-            throw new IllegalArgumentException(ONLY_DRINK_VALIDATION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(ORDER_VALIDATION_ERROR_MESSAGE);
         }
     }
 
@@ -110,7 +110,7 @@ public class Orders {
         if (orderMenuCounts.stream()
                 .mapToInt(Integer::parseInt)
                 .sum() > 20) {
-            throw new IllegalArgumentException(TOTAL_ORDER_COUNT_VALIDATION_ERROR_MESSAGE);
+            throw new IllegalArgumentException(ORDER_VALIDATION_ERROR_MESSAGE);
         }
     }
 
